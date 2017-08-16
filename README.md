@@ -1,7 +1,10 @@
 # euphi.github.io
-Blog
+## Blog
 
-{% for post in site.posts %}	
-###({{ post.url }}){{ post.title }}
-**{{ post.date | date: "%B %e, %Y" }}** . {{ post.category }} . ({{ post.url }})**  
-{% endfor %}	
+<ul>
+  {% for post in site.posts %}
+    <li>
+      <a href="{{ post.url }}">{{ post.title }}</a>
+    </li>
+  {% endfor %}
+</ul>
