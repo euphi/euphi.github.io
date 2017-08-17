@@ -15,7 +15,7 @@ Before-before: Developer C++ for VoIP (SIP) telephony systems
   * [Openhab](https://www.openhab.org/)
   * [Openhab Jython Support](https://github.com/steve-bate/openhab2-jython)
   * PCB development for Homie-ESP8266 with kiCAD.
-* [Fablab Nürnberg](fablab-nuernberg.de)
+* [Fablab Nürnberg](https://fablab-nuernberg.de)
 
 ### More Information
 
