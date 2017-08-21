@@ -2,7 +2,7 @@
 layout: default
 ---
 
-{% for tag in tags %}
+{% for tag in site.tags %}
   {% assign t = tag | first %}
   {% assign posts = tag | last %}
 
