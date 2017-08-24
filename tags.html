@@ -1,28 +1,76 @@
 ---
 layout: default
-js: blog-tags.js
+title: Tags
+css:
+- /css/style.css
+js:
+- /js/blog.js
 ---
 
-{% for tag in site.tags %}
-  {% assign t = tag | first %}
-  {% assign posts = tag | last %}
-  <div class="blog-list-container hidden" id="{{ t }}-container">
-    <ul class="blog-list">
-      {% for post in posts %}
-        {% if post.tags contains t %}
-          <li>
-            <span class="blog-item-date">{{ post.date | date: "%d %b %Y" }}</span>
-            <a href="{{ post.url }}">{{ post.title }}</a>
-          </li>
-        {% endif %}
-      {% endfor %}
-    </ul>
+<div class="container">
+  <div class="row">
+    <div class="col-sm-9">
+      <div class="table-blog" id="all-container">
+        <div class="table-responsive">
+          <table class="table table-condensed table-borderless">
+            <tbody>
+              {% for post in site.posts %}
+              <tr>
+                <td class="fit"><span class="text-mono text-muted">{{ post.date | date: "%d %b %Y" }}</span></td>
+                <td><a href="{{ post.url }}">{{ post.title }}</a></td>
+              </tr>
+              {% endfor %}
+            </tbody>
+          </table>
+        </div>
+      </div>
 
-    {% assign numPosts = posts | size %}
-    {% if numPosts == 1 %}
-      <p>{{ posts | size }} post containing tag <b>{{ t }}</b></p>
-    {% else %}
-      <p>{{ posts | size }} posts containing tag <b>{{ t }}</b></p>
-    {% endif %}
+      <!-- Reference: http://www.jokecamp.com/blog/listing-jekyll-posts-by-tag/ -->
+      {% for tag in site.tags %}
+        {% assign t = tag | first %}
+        {% assign posts = tag | last %}
+        <div class="table-blog hidden" id="{{ t }}-container">
+          <div class="table-responsive">
+            <table class="table table-condensed table-borderless">
+              <tbody>
+                {% for post in site.posts %}
+                  {% if post.tags contains t %}
+                  <tr>
+                    <td class="fit"><span class="text-mono text-muted">{{ post.date | date: "%d %b %Y" }}</span></td>
+                    <td><a href="{{ post.url }}">{{ post.title }}</a></td>
+                  </tr>
+                  {% endif %}
+                {% endfor %}
+              </tbody>
+            </table>
+          </div>
+
+          {% assign numPosts = posts | size %}
+          {% if numPosts == 1 %}
+            <p>{{ posts | size }} post containing tag <b>{{ t }}</b></p>
+          {% else %}
+            <p>{{ posts | size }} posts containing tag <b>{{ t }}</b></p>
+          {% endif %}
+        </div>
+      {% endfor %}
+
+    </div>
+
+    <div class="col-sm-3">
+      <div class="container-header">Tags</div>
+
+      <div class="list-group list-group-inline">
+        {% assign sorted_tags = site.tags | sort %}
+        {% for tag in sorted_tags %}
+          {% assign t = tag | first %}
+          {% assign posts = tag | last %}
+          <a href onclick="filter('{{ t }}'); return false;" class="list-group-item" id="{{ t }}-item">{{ t }}</a>
+        {% endfor %}
+      </div>
+
+      <p>
+        <a href onclick="filter('all'); return false;">Show all posts</a>
+      </p>
+    </div>
   </div>
-{% endfor %}
+</div>
