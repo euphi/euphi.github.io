@@ -1,6 +1,7 @@
 ---
 layout: thing
 thing: BalkonController
+projectlink: https://github.com/euphi/BalkonController
 prjstate: proto
 features:
   - Controller to supply water to 4 different plant beds
