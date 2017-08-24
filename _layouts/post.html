@@ -31,13 +31,14 @@
         {{ content }}
       </section>
     </div>
-    
-{% assign sorted_tags = page.tags | sort %}
-{% for tag in sorted_tags %}
-  <span class="tag"><a href="/tags.html#{{ tag }}">{{ tag }}</a></span>
-{% endfor %}
 
-    
+  <div class="list-group list-group-condensed list-group-inline">
+    {% assign sorted_tags = page.tags | sort %}
+    {% for tag in sorted_tags %}
+      <span class="tag"><a href="/tags.html#{{ tag }}">{{ tag }}</a></span>
+    {% endfor %}
+  </div>
+   
     {% if site.google_analytics %}
       <script type="text/javascript">
         (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
