@@ -16,7 +16,7 @@ All my current projects are based on Homie-ESP8266:
 ### Running, but not yet feature-complete
   * Thermostat + LED-Controller - missing feature: user interaction, e.g. touch, professionally-manufactored PCB for deployment in all rooms)
     * Location: 2 Office rooms, planned: other rooms incl. bathrooms
-  * Irrigation Control (includes LED-Controller) 
+  * [Irrigation Control](thing_balkoncontroller.html (includes LED-Controller) 
     * Location: Balkony
     * Sensors & Actors: BMP180 (Temperature + Air pressure), PCF8575 (Multi-IO) + Relay-Board/MOSFETs, External: Magnetic Valves; PWM output for LED
     * Missing feature: autonomous timers, water level of tank, automatic filling of tank.
