@@ -1,11 +1,27 @@
 ---
 layout: default
+comments: true
 ---
 
-<h1{{page.thing}}</h1>
+<h1>{{ page.thing }}</h1>
 
 <h2>Overview</h2>
+<ul>
+  <li>Project-Page: <a href="{{ page.projectlink }}"> {{ page.projectlink }} </a></li>
+  <li>Features:
+  <ul>
+    {% for feat in page.features %}
+      <li>{{ feat }}</li>
+    {% endfor %}
+  </ul>
+  </li>
+</ul>
 
+<h2>Description</h2>
+
+{{ content }}
+
+<h2>Technology</h2>
 <h3>Software Modules</h3>
 <ul>
 {% for sw in page.sws %}
@@ -33,7 +49,3 @@ layout: default
   <li>{{ hw }}</li>
 {% endfor %}
 </ul>
-
-<h2>Description</h2>
-
-{{ content }}
