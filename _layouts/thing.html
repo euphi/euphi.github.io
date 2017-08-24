@@ -1,0 +1,39 @@
+---
+layout: default
+---
+
+<h1{{page.thing}}</h1>
+
+<h2>Overview</h2>
+
+<h3>Software Modules</h3>
+<ul>
+{% for sw in page.sws %}
+  <li>{{ sw }}</li>
+{% endfor %}
+</ul>
+
+<h3>Electronic Modules</h3>
+<ul>
+{% for el in page.electronics %}
+  <li>{{ el }}</li>
+{% endfor %}
+</ul>
+
+<h3>Electromechanical Modules</h3>
+<ul>
+{% for em in page.ems %}
+  <li>{{ em }}</li>
+{% endfor %}
+</ul>
+
+<h3>Other Hardware</h3>
+<ul>
+{% for hw in page.hws %}
+  <li>{{ hw }}</li>
+{% endfor %}
+</ul>
+
+<h2>Description</h2>
+
+{{ content }}
