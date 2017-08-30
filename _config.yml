@@ -5,7 +5,7 @@ navigation:
 - title: Blog
   url: /blog/
 - collections:
-  - sw_modules
+  - sw_modules:
     - output: true
-  - hw_modules
+  - hw_modules:
     - output: true
