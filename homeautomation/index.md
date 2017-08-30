@@ -9,7 +9,7 @@ Core of the the system is a [openHAB](https://www.openhab.org) server that integ
 All my current projects are based on Homie-ESP8266:
 
 ### Finished
-  * Thermostat + LED-Controller (autonomous)  
+  * [Küchencontroller](thing_kuechencontroller.html): Thermostat + LED-Controller (autonomous)  
     * Sensors & Actors: HTU21D (Temperature + Humidity)
     * Location: Kitchen
 
