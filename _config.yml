@@ -4,3 +4,8 @@ navigation:
   url: /about/
 - title: Blog
   url: /blog/
+- collections:
+  - sw_modules
+    - output: true
+  - hw_modules
+    - output: true
