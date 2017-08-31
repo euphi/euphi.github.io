@@ -33,6 +33,8 @@ comments: true
 <ul>
 {% for el in page.electronics %}
   <li>{{ el }}</li>
+  {% assign el_mod = site.sw_modules | where "prettyname", "HomieNodeCollection" %}
+  <li>{{el_mod}}</li>
 {% endfor %}
 </ul>
 
