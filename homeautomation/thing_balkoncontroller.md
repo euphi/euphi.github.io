@@ -26,8 +26,9 @@ hws:
   - PVC hoses + connectors
   - water tanks
 sws:
-  - "<a href='https://github.com/euphi/HomieNodeCollection'>HomieNodeCollection</a>"
-  - Homie-ESP8266
+  - hnc
+  - homie-esp
+  - automaton
 comments: true
 ---
 

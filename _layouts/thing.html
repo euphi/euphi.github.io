@@ -24,17 +24,17 @@ comments: true
 <h2>Technology</h2>
 <h3>Software Modules</h3>
 <ul>
-{% for sw in page.sws %}
-  <li>{{ sw }}</li>
-{% endfor %}
+  {% for sw in page.sws %}
+    <li>{{ sw }}</li>
+    {% assign swm = site.swmodules | where: 'swid', sw %}
+    <li>{{ swm }}</li>
+  {%  endfor %}
 </ul>
 
 <h3>Electronic Modules</h3>
 <ul>
 {% for el in page.electronics %}
   <li>{{ el }}</li>
-  {% assign el_mod = site.sw_modules | where "prettyname", "HomieNodeCollection" %}
-  <li>{{el_mod}}</li>
 {% endfor %}
 </ul>
 

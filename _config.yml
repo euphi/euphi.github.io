@@ -1,11 +1,7 @@
 theme: jekyll-theme-hacker
-navigation:
-- title: About
-  url: /about/
-- title: Blog
-  url: /blog/
-- collections:
-  - sw_modules:
-    - output: true
-  - hw_modules:
-    - output: true
+collections:
+  swmodules:
+    output: true
+  hwmodules:  
+    output: true
+
