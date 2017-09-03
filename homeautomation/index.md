@@ -8,11 +8,15 @@ Core of the the system is a [openHAB](https://www.openhab.org) server that integ
 
 All my current projects are based on Homie-ESP8266:
 
-### Finished
+### Ready (Finished, but will receive further updates for improvements)
   * [Küchencontroller](thing_kuechencontroller.html): Thermostat + LED-Controller (autonomous)  
     * Sensors & Actors: HTU21D (Temperature + Humidity)
     * Location: Kitchen
-
+  * [Heating Contoller](thing_heizungcontroller.html)
+    * Location: Entrance (Distribution Box)
+    * Actors: PCF8575 Multi-IO to controll one 8xRelais-Board + one 4xRelais-Board
+    * Sensors: Reed contact at front-door (connected to PCF8575 input)    
+    
 ### Running, but not yet feature-complete
   * Thermostat + LED-Controller - missing feature: user interaction, e.g. touch, professionally-manufactored PCB for deployment in all rooms)
     * Location: 2 Office rooms, planned: other rooms incl. bathrooms
@@ -20,10 +24,6 @@ All my current projects are based on Homie-ESP8266:
     * Location: Balkony
     * Sensors & Actors: BMP180 (Temperature + Air pressure), PCF8575 (Multi-IO) + Relay-Board/MOSFETs, External: Magnetic Valves; PWM output for LED
     * Missing feature: autonomous timers, water level of tank, automatic filling of tank.
-  * Heating Contoller (missing: better integration, integration of door alert)
-    * Location: Entrance (Distribution Box)
-    * Actors: PCF8575 Multi-IO to controll one 8xRelais-Board + one 4xRelais-Board
-    * Missing feature: Read in contacts from doors to support door alarm system
   
 ### Work in progress (runs on lab-desk):
   * Touch Controller (using MPR121)

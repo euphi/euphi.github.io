@@ -1,6 +1,6 @@
 ---
 swid: hnc
-url: https://github.com/euphi/HomieNodeCollection/
+exturl: https://github.com/euphi/HomieNodeCollection/
 prettyname: HomieNodeCollection
 sdesc: my collection of useful Homie-Nodes
 ---

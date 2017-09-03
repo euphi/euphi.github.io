@@ -25,9 +25,9 @@ comments: true
 <h3>Software Modules</h3>
 <ul>
   {% for sw in page.sws %}
-    <li>{{ sw }}</li>
-    {% assign swm = site.swmodules | where: 'swid', sw %}
-    <li>{{ swm }}</li>
+    {% assign swm = site.swmodules | where: 'swid', sw | first %}
+    <li><a href="{{ swm.exturl }}" title="{{ swm.sdesc }}">{{ swm.prettyname }}</a></li>
+    <li>☇ {{ sw }} </li>
   {%  endfor %}
 </ul>
 
