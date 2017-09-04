@@ -10,7 +10,7 @@ Before-before: Developer C++ for VoIP (SIP) telephony systems
 
 ## Interested in ..
 
-* Homeautomation
+* [Homeautomation](/homeautomation)
   * [Homie](https://github.com/marvinroger/homie)-MQTT-Convention and its ESP8266 implementation [Homie-ESP8266](https://github.com/marvinroger/homie-esp8266)
   * [Openhab](https://www.openhab.org/)
   * [Openhab Jython Support](https://github.com/steve-bate/openhab2-jython)
@@ -19,5 +19,7 @@ Before-before: Developer C++ for VoIP (SIP) telephony systems
 
 ### More Information
 
-Cycling (multi-day-tours), Camping (bicycle or camper car), Photography
+* Cycling (multi-day-tours)
+* Camping (bicycle or camper car)
+* Photography (well.. if I would have more time....)
 
