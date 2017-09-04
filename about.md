@@ -4,9 +4,9 @@ permalink: /about/
 ---
 
 ## Profession
-Systems Engineer at Siemens AG - now responsible for train control systems (Software Part) of High-Speed Trains.
-Before: Integration of Automatic Train Protection (ETCS, various national systems) into High-Speed Trains.
-Before-before: Developer C++ for VoIP (SIP) telephony systems 
+* Now: Systems Engineer at Siemens AG - responsible for train control systems (Software Part) of High-Speed Trains.
+* Before: Integration of Automatic Train Protection (ETCS, various national systems) into High-Speed Trains.
+* Before-before: Developer C++ for VoIP (SIP) telephony systems 
 
 ## Interested in ..
 
