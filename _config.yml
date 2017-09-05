@@ -4,4 +4,6 @@ collections:
     output: true
   hwmodules:  
     output: true
+  elmodules:
+    output: true
 
