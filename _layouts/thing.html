@@ -34,8 +34,10 @@ comments: true
 <h3>Electronic Modules</h3>
 <ul>
 {% for el in page.electronics %}
-  <li>{{ el }}</li>
-{% endfor %}
+    {% assign elm = site.elmodules | where: 'elid', el | first %}
+    <li><a href="{{ elm.exturl }}" title="{{ elm.sdesc }}">{{ elm.prettyname }}</a></li>
+    <li>☇ {{ el }} </li>
+{%  endfor %}  
 </ul>
 
 <h3>Electromechanical Modules</h3>
@@ -48,6 +50,8 @@ comments: true
 <h3>Other Hardware</h3>
 <ul>
 {% for hw in page.hws %}
+  {% assign hwm = site.hwmodules | where: 'hwid', el | first %}
+  <li><a href="{{ hwm.exturl }}" title="{{ hwm.sdesc }}">{{ hwm.prettyname }}</a></li>
   <li>{{ hw }}</li>
 {% endfor %}
 </ul>
