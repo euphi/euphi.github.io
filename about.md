@@ -8,6 +8,10 @@ permalink: /about/
 * Before: Integration of Automatic Train Protection (ETCS, various national systems) into High-Speed Trains.
 * Before-before: Developer C++ for VoIP (SIP) telephony systems 
 
+## Education
+* "Diplom-Ingenieur" Electrical Engineering (Data Systems) - Technical University of Darmstadt
+* As a student I worked as sysadmin for various internet service providers
+
 ## Interested in ..
 
 * [Homeautomation](/homeautomation)
