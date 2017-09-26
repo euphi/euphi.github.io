@@ -2,13 +2,13 @@
 
 ## Installation Linux
 
-* Ich habe ein aktuelles Armbian Image installiert, siehe (https://www.armbian.com/orange-pi-plus-2/).
+* Ich habe ein aktuelles Armbian Image installiert, [Link](https://www.armbian.com/orange-pi-plus-2/).
   * Dazu einfach das Image auspacken und auf die SD-Karte kopieren (`dd bs=4M if=Image-File.img of=/dev/mmcblk0`) und in den Slot am Orange PI stecken und diesen einschalten.
 * Den Boot-Vorgang habe ich mir dann über die UART-Schnittstelle mit einem UART-zu-USB-Wandler angeschaut (Baudrate 115200).
 * Interessanterweise hat das Image (und ich habe auch noch einige andere probiert) immer nur bis zur USB-Initialisierung gebootet und ist dann abstürzt.
   * Mit USB-Keyboard am Port ging es dann.
   * Ich habe dann ein Upgrade gemacht (`apt update && apt upgrade`), danach bootet der Orange PI auch "headless", also ohne keyboard.
-* Ich habe das Problem etwas detaillierter auf (https://forum.armbian.com/index.php?/topic/5267-orange-pi-plus-2-headless-boot-not-possible-reboot-if-no-keyboard-is-connected/) beschrieben.
+* Ich habe das Problem etwas detaillierter im [Armbian Forum](https://forum.armbian.com/index.php?/topic/5267-orange-pi-plus-2-headless-boot-not-possible-reboot-if-no-keyboard-is-connected/) beschrieben.
 
 
 ## Installation Komponenten
@@ -24,6 +24,7 @@
 * Außerdem ist ein Installation von java notwendig. openHAB empfiehlt dafür "zulu", also empfehle ich das hier auch mal:
   * Repository-Key hinzufügen: `apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv-keys 0x219BD9C9`
   * Repository hinzufügen: `apt-add-repository 'deb http://repos.azulsystems.com/ubuntu stable main'`
+  * Quellen aktualisieren: `apt update`
   * java installieren: `apt install zulu-embedded-8`
 * Nun kann man openhab2 starten: `service openhab2 status`
 
@@ -49,5 +50,13 @@
   * Unter 'Transformations' sind Add-Ons für die Konvertierung von Daten auf dem openHAB event-bus oder im Benutzer-Inferface, also z.B. "Map Transformation" für die Umwandlung von numerischen Werten oder Strings zu (anderen) Strings, z.B. '0' -> "OFF", "true" -> "ON" usw.
   
   
+### nginx
+
+
+#### Proxy für openHAB (inkl. Authentifizierung)
+* tbc
+
+#### Erstellung der SSL-Keys mit Letsencrypt
+* [Link](https://www.digitalocean.com/community/tutorials/how-to-secure-nginx-with-let-s-encrypt-on-ubuntu-16-04)
 
 
