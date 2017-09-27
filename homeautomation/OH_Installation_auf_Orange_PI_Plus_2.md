@@ -18,9 +18,11 @@
 ### openHAB
 
 * Ich habe mich für den nightly-build entschieden, da zum Installationszeitpunkt nur 2.0 (stable) und 2.1 (beta) verfügbar waren, die keinen oder nur eingeschränkten JSR223 ("Jython") Scripting-Support haben. Mit einer 2.2 als Beta oder gar Release empfehle ich diese Varianten zu verwenden.
-* Paket-Quelle hinzufügen: `echo deb https://openhab.jfrog.io/openhab/openhab-linuxpkg unstable main > /etc/apt/sources.list.d/openhab2.list`
-* Um Fehler wegen fehlender Signatur der Pakete zu vermeiden, muss noch der Schlüssel dazu installiert werden: `wget -qO - 'https://bintray.com/user/downloadSubjectPublicKey?username=openhab' | sudo apt-key add -`
-* `apt update && apt install openhab2`
+* Paket-Quelle hinzufügen:
+  * > echo deb https://openhab.jfrog.io/openhab/openhab-linuxpkg unstable main > /etc/apt/sources.list.d/openhab2.list
+* Um Fehler wegen fehlender Signatur der Pakete zu vermeiden, muss noch der Schlüssel dazu installiert werden:
+  * > `wget -qO - 'https://bintray.com/user/downloadSubjectPublicKey?username=openhab' | sudo apt-key add -`
+  * > `apt update && apt install openhab2`
 * Außerdem ist ein Installation von java notwendig. openHAB empfiehlt dafür "zulu", also empfehle ich das hier auch mal:
   * Repository-Key hinzufügen: `apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv-keys 0x219BD9C9`
   * Repository hinzufügen: `apt-add-repository 'deb http://repos.azulsystems.com/ubuntu stable main'`
@@ -29,10 +31,10 @@
 * Nun kann man openhab2 starten: `service openhab2 status`
 
 ### nginx
-* `apt install nginx`
+* > apt install nginx
 
 ### letsencrypt
-* `apt install letsencrypt`
+* >apt install letsencrypt
 
 ### _Work in progress_ 
 * tbc.
@@ -57,6 +59,8 @@
 * tbc
 
 #### Erstellung der SSL-Keys mit Letsencrypt
-* [Link](https://www.digitalocean.com/community/tutorials/how-to-secure-nginx-with-let-s-encrypt-on-ubuntu-16-04)
+* [englische Anleitung](https://www.digitalocean.com/community/tutorials/how-to-secure-nginx-with-let-s-encrypt-on-ubuntu-16-04)
+* Vorbedingung: Laufender nginx auf Port 80, ggf. eingerichtetes Port-Forwarding. (Wichtig: Es muss Port 80 oder 443 sein, andere Ports sind aus Sicherheitsgründen nicht möglich).
+* > sudo letsencrypt certonly --webroot  --webroot-path /var/www/letsencrypt -d punsk.1337.cx
 
 
