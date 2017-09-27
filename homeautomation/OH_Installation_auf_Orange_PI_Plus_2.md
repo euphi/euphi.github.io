@@ -42,10 +42,6 @@
 ### letsencrypt
 * > apt install letsencrypt
 
-### _Work in progress_ 
-* tbc.
-
-
 ## Konfiguration der Komponenten
 
 ### openHAB
@@ -60,6 +56,8 @@
   
 ### nginx
 
+* [Siehe auch](https://community.openhab.org/t/using-nginx-reverse-proxy-authentication-and-https/14542)
+
 #### Erstellung der SSL-Keys mit Letsencrypt
 * [englische Anleitung](https://www.digitalocean.com/community/tutorials/how-to-secure-nginx-with-let-s-encrypt-on-ubuntu-16-04)
 * Vorbedingung: Laufender nginx auf Port 80, ggf. eingerichtetes Port-Forwarding. (Wichtig: Es muss Port 80 oder 443 sein, andere Ports sind aus Sicherheitsgründen nicht möglich).
@@ -67,17 +65,17 @@
   * Beispiel aus einer nginx-Konfigurationsdatei:
   ```
   location /.well-known/acme-challenge/ {
-                root                            /var/www/letsencrypt;
-        }
+                root    /var/www/letsencrypt;
+  }
   ```
 * Nun können die Zertifikate generiert werden:
   * > sudo letsencrypt certonly --webroot  --webroot-path /var/www/letsencrypt -d punsk.1337.cx
 * Und in die nginx-Konfiguration aufgenommen werden:
   ```
-        listen                          443 ssl;        
-        server_name                     punsk.1337.cx;
-        ssl_certificate                 /etc/letsencrypt/live/punsk.1337.cx/fullchain.pem;
-        ssl_certificate_key             /etc/letsencrypt/live/punsk.1337.cx/privkey.pem;
+  listen                  443 ssl;        
+  server_name             punsk.1337.cx;
+  ssl_certificate         /etc/letsencrypt/live/punsk.1337.cx/fullchain.pem;
+  ssl_certificate_key     /etc/letsencrypt/live/punsk.1337.cx/privkey.pem;
   ```
 * Mit einem regelmäßigen Aufruf von
   * > letsencrypt renew
@@ -91,10 +89,10 @@
   * > root@orangepiplus:/etc/nginx# htpasswd -bc /etc/nginx/.htpasswd username password
 * .. und in der nginx-Konfiguration verwenden:
   ```
-          location / {                
-                auth_basic                            "Username and Password Required";
-                auth_basic_user_file                  /etc/nginx/.htpasswd;
-        }
+  location / {                
+    auth_basic            "Username and Password Required";
+    auth_basic_user_file  /etc/nginx/.htpasswd;
+  }
 
   ```
   * Nun muss noch der Proxy für Openhab eingerichtet werden. Dazu wird einfach alles auf localhost:8080 weitergeleitet. 
@@ -108,7 +106,8 @@
   }
   ```
   #### Konfigurationsdatei für openhab in nginx komplett (/etc/nginx/site-available/openhab)
-  ```
+  
+  ```  
   server {
         listen                          443 ssl;
         #listen                         80;
@@ -138,6 +137,12 @@
   * Die auskommentierte Zeile
   > #proxy_set_header Strict-Transport-Security "max-age=31536000; includeSubDomains";
   * sorgt für den Einsatz von [HSTS](https://de.wikipedia.org/wiki/HTTP_Strict_Transport_Security).
-  * Dies sorgt dafür, dass Webbrowser für den Zugriff auf die Domain in Zukunft (so lange wie die definierte Zeit max-age) zwingen HTTPS für den Zugriff auf die Domain verwenden. Man sollte das also erst aktivieren, nachdem man seine SSL-Konfiguration ordentlich getestet hat, sonst sperrt man sich leicht mal aus.
+  * Dies sorgt dafür, dass Webbrowser für den Zugriff auf die Domain in Zukunft (so lange wie die definierte Zeit max-age) zwingend HTTPS für den Zugriff auf die Domain verwenden. Man sollte das also erst aktivieren, nachdem man seine SSL-Konfiguration ordentlich getestet hat, sonst sperrt man sich leicht mal aus.
+
+### Grafana / influxdb
+
+* _work in progress_
+
+
   
   
