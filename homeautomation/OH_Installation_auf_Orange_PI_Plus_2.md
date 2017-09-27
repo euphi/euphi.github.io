@@ -22,19 +22,25 @@
   * > echo deb https://openhab.jfrog.io/openhab/openhab-linuxpkg unstable main > /etc/apt/sources.list.d/openhab2.list
 * Um Fehler wegen fehlender Signatur der Pakete zu vermeiden, muss noch der Schlüssel dazu installiert werden:
   * > `wget -qO - 'https://bintray.com/user/downloadSubjectPublicKey?username=openhab' | sudo apt-key add -`
-  * > `apt update && apt install openhab2`
+    >
+    > `apt update && apt install openhab2`
 * Außerdem ist ein Installation von java notwendig. openHAB empfiehlt dafür "zulu", also empfehle ich das hier auch mal:
-  * Repository-Key hinzufügen: `apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv-keys 0x219BD9C9`
-  * Repository hinzufügen: `apt-add-repository 'deb http://repos.azulsystems.com/ubuntu stable main'`
-  * Quellen aktualisieren: `apt update`
-  * java installieren: `apt install zulu-embedded-8`
-* Nun kann man openhab2 starten: `service openhab2 status`
+  * Repository-Key hinzufügen:
+    * > apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv-keys 0x219BD9C9
+  * Repository hinzufügen:
+    * > apt-add-repository 'deb http://repos.azulsystems.com/ubuntu stable main'
+  * Quellen aktualisieren:
+    * > apt update
+  * java installieren:
+    * > apt install zulu-embedded-8
+* Nun kann man openhab2 starten:
+  * > service openhab2 status
 
 ### nginx
 * > apt install nginx
 
 ### letsencrypt
-* >apt install letsencrypt
+* > apt install letsencrypt
 
 ### _Work in progress_ 
 * tbc.
@@ -54,13 +60,84 @@
   
 ### nginx
 
-
-#### Proxy für openHAB (inkl. Authentifizierung)
-* tbc
-
 #### Erstellung der SSL-Keys mit Letsencrypt
 * [englische Anleitung](https://www.digitalocean.com/community/tutorials/how-to-secure-nginx-with-let-s-encrypt-on-ubuntu-16-04)
 * Vorbedingung: Laufender nginx auf Port 80, ggf. eingerichtetes Port-Forwarding. (Wichtig: Es muss Port 80 oder 443 sein, andere Ports sind aus Sicherheitsgründen nicht möglich).
-* > sudo letsencrypt certonly --webroot  --webroot-path /var/www/letsencrypt -d punsk.1337.cx
+* nginx muss die "acme-challenge" auf einem bekannten Pfad beantworten, den man dann im nächsten Schritt angibt.
+  * Beispiel aus einer nginx-Konfigurationsdatei:
+  ```
+  location /.well-known/acme-challenge/ {
+                root                            /var/www/letsencrypt;
+        }
+  ```
+* Nun können die Zertifikate generiert werden:
+  * > sudo letsencrypt certonly --webroot  --webroot-path /var/www/letsencrypt -d punsk.1337.cx
+* Und in die nginx-Konfiguration aufgenommen werden:
+  ```
+        listen                          443 ssl;        
+        server_name                     punsk.1337.cx;
+        ssl_certificate                 /etc/letsencrypt/live/punsk.1337.cx/fullchain.pem;
+        ssl_certificate_key             /etc/letsencrypt/live/punsk.1337.cx/privkey.pem;
+  ```
+* Mit einem regelmäßigen Aufruf von
+  * > letsencrypt renew
+* werden alle installierten Zertifikate automatisch rechtzeitig erneuert. 
 
 
+#### Proxy für openHAB (inkl. Authentifizierung)
+* Für die Authentifizierung kann man Basic Auth auf Basis einer `.htpasswd` verwenden. Dazu die Apache-Tools zur Erstellung der Password-Datei installieren:
+  * > apt install apache2-utils
+* Nun kann man die Password-Datei nun anlegen mit:
+  * > root@orangepiplus:/etc/nginx# htpasswd -bc /etc/nginx/.htpasswd username password
+* .. und in der nginx-Konfiguration verwenden:
+  ```
+          location / {                
+                auth_basic                            "Username and Password Required";
+                auth_basic_user_file                  /etc/nginx/.htpasswd;
+        }
+
+  ```
+  * Nun muss noch der Proxy für Openhab eingerichtet werden. Dazu wird einfach alles auf localhost:8080 weitergeleitet. 
+  ```
+  location / { 
+            proxy_pass                            http://localhost:8080/;
+            proxy_set_header Host                 $http_host;
+            proxy_set_header X-Real-IP            $remote_addr;
+            proxy_set_header X-Forwarded-For      $proxy_add_x_forwarded_for;
+            proxy_set_header X-Forwarded-Proto    $scheme;
+  }
+  ```
+  #### Konfigurationsdatei für openhab in nginx komplett (/etc/nginx/site-available/openhab)
+  ```
+  server {
+        listen                          443 ssl;
+        #listen                         80;
+        server_name                     punsk.1337.cx;
+        ssl_certificate                 /etc/letsencrypt/live/punsk.1337.cx/fullchain.pem;
+        ssl_certificate_key             /etc/letsencrypt/live/punsk.1337.cx/privkey.pem;
+
+        location / {
+                proxy_pass                            http://localhost:8080/;
+                proxy_set_header Host                 $http_host;
+                proxy_set_header X-Real-IP            $remote_addr;
+                proxy_set_header X-Forwarded-For      $proxy_add_x_forwarded_for;
+                proxy_set_header X-Forwarded-Proto    $scheme;
+                #proxy_set_header Strict-Transport-Security "max-age=31536000; includeSubDomains";                                    
+                auth_basic                            "Username and Password Required";
+                auth_basic_user_file                  /etc/nginx/.htpasswd;
+        }
+        location /grafana/ {
+                 proxy_pass http://localhost:3030/;
+        }
+        location /.well-known/acme-challenge/ {
+                root                            /var/www/letsencrypt;
+        }
+
+}
+```
+  * Die auskommentierte Zeile
+  > #proxy_set_header Strict-Transport-Security "max-age=31536000; includeSubDomains";
+  * sorgt für den Einsatz von [HSTS](https://de.wikipedia.org/wiki/HTTP_Strict_Transport_Security).
+  * Dies sorgt dafür, dass Webbrowser für den Zugriff auf die Domain in Zukunft (so lange wie die definierte Zeit max-age) zwingen HTTPS für den Zugriff auf die Domain verwenden. Man sollte das also erst aktivieren, nachdem man seine SSL-Konfiguration ordentlich getestet hat, sonst sperrt man sich leicht mal aus.
+  
+  
