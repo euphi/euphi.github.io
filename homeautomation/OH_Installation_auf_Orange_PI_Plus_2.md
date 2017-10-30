@@ -137,7 +137,7 @@
   * Die auskommentierte Zeile
   > #proxy_set_header Strict-Transport-Security "max-age=31536000; includeSubDomains";
   * sorgt für den Einsatz von [HSTS](https://de.wikipedia.org/wiki/HTTP_Strict_Transport_Security).
-  * Dies sorgt dafür, dass Webbrowser für den Zugriff auf die Domain in Zukunft (so lange wie die definierte Zeit max-age) zwingend HTTPS für den Zugriff auf die Domain verwenden. Man sollte das also erst aktivieren, nachdem man seine SSL-Konfiguration ordentlich getestet hat, sonst sperrt man sich leicht mal aus.
+  * Dies sorgt dafür, dass Webbrowser für den Zugriff auf die Domain in Zukunft (so lange wie die definierte Zeit max-age) zwingend HTTPS für den Zugriff auf die Domain verwenden. Man sollte das also erst aktivieren, nachdem man seine SSL-Konfiguration ordentlich getestet hat, sonst sperrt man sich und andere Besucher der Seite leicht versehentlich aus.
 
 ### Grafana / influxdb
 

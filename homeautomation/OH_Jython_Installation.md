@@ -24,7 +24,9 @@
 
 ### Das erste Skript
 
-* _to be continued_
+* Skripte werden beim Laden der Skript-Datei automatisch einmal ausgeführt. Geladen 
 
 ### API-Doku
+
 * Ganz wichtig: Jython erlaubt den vollen Zugriff auf die Eclipse Smarthome API. Die Doku dazu findet sich [hier](http://www.eclipse.org/smarthome/documentation/javadoc/index.html).
+* Das ist einerseits großartig, weil man damit praktisch direkt "in openHAB" programmiert und so alle Möglichkeiten hat, andererseits ist die API so natürlich auch sehr umfangreich und komplex.
