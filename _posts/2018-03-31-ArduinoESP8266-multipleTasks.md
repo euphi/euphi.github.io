@@ -14,10 +14,10 @@ I analysed the code of my lib and of WS2812FX and also monitored free heap and e
 
 ## The Background
 
-Yesterday I dug further and suddently I remembered a problem I found a while ago:
+Yesterday I dug further and suddenly remembered a problem I found a while ago:
 
 The [Arduino core for ESP8266](https://github.com/esp8266/Arduino) uses two different task:
-* The "normal" tasks that runs `setup()` and `loop()`
+* The "normal" tasks that runs `loop()`
 * The "network" task that handles all network related stuff.
 
 When you do "synchronous" network I/O you don't notice this: You just poll in your `loop()` if there is something new to handle.
@@ -27,15 +27,15 @@ However, Homie-ESP8266 uses asynchronous I/O ([Async MQTT](https://github.com/ma
 (based on the Espressif [NON-OS SDK](https://github.com/espressif/ESP8266_NONOS_SDK)) call you back if they detect new
 activity on network - **and this is done in the "network" task.**
 
-The ESP8266 non-os SDK doesn't do a real parallel processing, it does a [cooperative multitreading](https://en.wikipedia.org/wiki/Cooperative_multitasking),
-but the task switch can occur whenever `delay()` or `yield()` is called. 
+The ESP8266 non-os SDK doesn't do a real parallel processing, it does a [cooperative multitasking](https://en.wikipedia.org/wiki/Cooperative_multitasking),
+but the task switch occurs whenever `delay()` or `yield()` is called. 
 
-So, there are many recommendations to call `yield()` when performing long tasks in your loop, to handle "background" tasks, e.g.
+There are many recommendations to call `yield()` when performing long tasks in your loop, to handle "background" tasks, e.g.
 on [Stackoverflow](https://stackoverflow.com/questions/34497758/what-is-the-secret-of-the-arduino-yieldfunction) or on
 [Sparkfun](https://learn.sparkfun.com/tutorials/esp8266-thing-hookup-guide/using-the-arduino-addon). 
 
 So, whenevery you call `delay()` or `yield()` in your `loop()` (directly or indirectly by another functions that calls them),
-there is a context switch and your callbacks of you asynchronous network I/O may be called. In case of Homie this is the
+there is a context switch and your callbacks of your asynchronous network I/O may be called. In case of Homie this is the
 `HomieNode::handleInput()` method.
 
 ## The Details
@@ -71,7 +71,7 @@ void WS2812FX::service() {
 
 ```
 
-So..if new MQTT data arrives while WS2812FX does it calculations they are handled, when the line `delay(1)` is called.
+So..if new MQTT data arrives while WS2812FX does it calculations, they are handled, when the line `delay(1)` is called.
 So this call returns **after** the `HomieNode::handleInput()` returns.
 
 However, my `handleInput()` [implementation for the ESP_Homie_WS2812FX libray](https://github.com/euphi/ESP_Homie_WS2812FX/blob/35b656dd58c573bf2b75a3b433441a4679e4cbb2/src/WS2812Node.cpp#L63)
@@ -83,10 +83,10 @@ libary while its underlying data has just been invalidated. This leads to a memo
 
 So, what's the conclusion?
 
-**Just never change data in you asynchronous callback (e.g. `HomieNode::handleInput()` that you rely on in your `loop()` methods.
-You must synchronise your data handover with your loop task.**
+**In your asynchronous callback (e.g. `HomieNode::handleInput()`) never change data  that you rely on in your `loop()` methods.
+You must synchronise your data handover from the network task to your loop task.**
 
-Of couse, this includes everything what is called from your global `loop()` functions: your `HomieNode::loop()` instances,
+Of couse, this includes everything what is called from your global `loop()` function: your `HomieNode::loop()` instances, and
 service routines of your called libraries (e.g `WS128FX::service()` - or `Machine::run()` of the [Automaton](https://github.com/tinkerspy/Automaton) library.)
 
 ## The Solution
