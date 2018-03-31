@@ -3,6 +3,8 @@ layout: post
 tags: esp8266 homie pitfall arduino
 ---
 
+# Why asynchronous networking can crash your ESP8266 program
+
 ## The Problem
 
 My [library](https://github.com/euphi/ESP_Homie_WS2812FX) to connect the nice [WS2812FX](https://github.com/kitesurfer1404/WS2812FX)
