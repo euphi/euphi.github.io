@@ -8,15 +8,15 @@ tags: esp8266 homie pitfall arduino
 ## The Problem
 
 My [library](https://github.com/euphi/ESP_Homie_WS2812FX) to connect the nice [WS2812FX](https://github.com/kitesurfer1404/WS2812FX)
-lib to Homie often crashed when sending commands to it.
+lib to [Homie](https://github.com/homieiot/convention) often crashed when sending commands to it.
 
 I analysed the code of my lib and of WS2812FX and also monitored free heap and everything seemed ok.
 
 ## The Background
 
-Yesterday I dug further and suddenly remembered a problem I found a while ago:
+Yesterday I dug further and suddenly remembered a problem I became aware of a while ago:
 
-The [Arduino core for ESP8266](https://github.com/esp8266/Arduino) uses two different task:
+The [Arduino core for ESP8266](https://github.com/esp8266/Arduino) uses two different tasks:
 * The "normal" tasks that runs `loop()`
 * The "network" task that handles all network related stuff.
 
